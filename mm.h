@@ -2,14 +2,12 @@
  * Менеджер памяти для объектов
  *
  * @author Латышев А.И.
- *
- * @revision $Id:$
  */
 
 
 #pragma once
 #ifndef MM_H
-#define	MM_H
+#define MM_H
 
 
 #include <stdint.h>
@@ -79,4 +77,4 @@ void ctor( const void* _class, void* _self, va_list* app );
 void dtor( void* _self );
 
 
-#endif	/* MM_H */
+#endif /* MM_H */

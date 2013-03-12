@@ -1,10 +1,7 @@
 /**
- * Модуль предоставления возможности работать со структурами как с классами
- * (с некоторыми ограничениями)
+ * Базовый модуль для ООС
  *
  * @author Латышев А.И.
- *
- * @revision $Id:$
  */
 
 
@@ -23,7 +20,7 @@
  */
 static void Object_ctor( void* _self, va_list* app )
 {
-	// ...
+	// Пусто
 }
 
 
@@ -33,7 +30,7 @@ static void Object_ctor( void* _self, va_list* app )
  */
 static void Object_dtor( void* _self )
 {
-	// ...
+	// Пусто
 }
 
 
@@ -51,13 +48,6 @@ static void Class_ctor( void* _self, va_list* app )
 	self->super = va_arg( *app, struct Class* );
 	self->size = va_arg( *app, size_t );
 	assert( self->super );
-
-	// Копирование указателей методов из родительского класса
-	{
-		/*size_t offset = 0;
-		offset = offsetof( struct Class, ctor );
-		memcpy( (char*)self + offset, (char*)self->super + offset, sizeOf( self->super ) - offset );*/
-	}
 
 	// Переопределение методов
 	{

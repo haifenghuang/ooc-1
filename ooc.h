@@ -1,16 +1,13 @@
 /**
- * Модуль предоставления возможности работать со объектами как с классами
- * (с некоторыми ограничениями)
+ * Базовый модуль для ООС
  *
  * @author Латышев А.И.
- *
- * @revision $Id:$
  */
 
 
 #pragma once
 #ifndef OOC_H
-#define	OOC_H
+#define OOC_H
 
 
 #include <stddef.h>
@@ -72,4 +69,4 @@ struct Class
 };
 
 
-#endif	/* OOC_H */
+#endif /* OOC_H */

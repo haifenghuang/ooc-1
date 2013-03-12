@@ -2,8 +2,6 @@
  * Менеджер памяти для объектов
  *
  * @author Латышев А.И.
- *
- * @revision $Id:$
  */
 
 
@@ -11,19 +9,8 @@
 #include <stdlib.h>
 #include <stdarg.h>
 #include <assert.h>
-#include <windows.h>
-#include "../bsp/graph.h"
 #include "ooc.h"
 #include "mm.h"
-
-
-#ifdef WIN32
-/**
- * Подсчёт использования памяти
- */
-static uint32_t objCount = 0;
-static uint32_t memoryUsage = 0;
-#endif
 
 
 /**
@@ -44,14 +31,6 @@ void* New( const void* _class, ... )
 	assert( object );
 	object->c = c;
 
-	#ifdef WIN32
-	// Проверка использования памяти
-	objCount++;
-	memoryUsage += c->size;
-	MoveCursor( 50, 1 );
-	printf( "Obj: %03i, Mem: %06i", objCount, memoryUsage );
-	#endif
-
 	va_start( ap, _class );
 	ctor( c, object, &ap );
 	va_end( ap );
@@ -69,15 +48,6 @@ void Delete( void* _self )
 {
 	if( _self )
 	{
-		#ifdef WIN32
-		// Проверка использования памяти
-		const struct Class* c = (const struct Class*)classOf( _self );
-		objCount--;
-		memoryUsage -= c->size;
-		MoveCursor( 50, 1 );
-		printf( "Obj: %03i, Mem: %06i", objCount, memoryUsage );
-		#endif
-
 		dtor( _self );
 		free( _self );
 	}
@@ -121,13 +91,12 @@ const void* cast( const void* _class, const void* _self )
 	const struct Class* c = (const struct Class*)classOf( _self );
 	assert( c && _class );
 
-	while( c )
+	for( ; c; c = c->super )
 	{
 		if( c == _class )
 		{
 			return c;
 		}
-		c = c->super;
 	}
 	return NULL;
 }
@@ -169,12 +138,11 @@ void dtor( void* _self )
 	{
 		c->dtor( _self );
 	}
-	while( s )
+	for( ; s; s = s->super )
 	{
 		if( s->dtor )
 		{
 			s->dtor( _self );
 		}
-		s = s->super;
 	}
 }

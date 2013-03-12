@@ -1,17 +1,16 @@
 /**
- * Список объетов
+ * Динамический список объетов
  *
  * @author Латышев А.И.
- *
- * @revision $Id:$
  */
 
 
 #pragma once
 #ifndef LIST_H
-#define	LIST_H
+#define LIST_H
 
 
+#include <stdint.h>
 #include "ooc.h"
 
 
@@ -106,4 +105,4 @@ struct ListClass
 };
 
 
-#endif	/* LIST_H */
+#endif /* LIST_H */
